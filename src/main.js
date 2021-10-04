@@ -139,24 +139,21 @@ import moonTextureUrl from './moon-texture-contrast.png';
 const moonTexture = new THREE.TextureLoader().load(moonTextureUrl);
 moonTexture.magFilter = THREE.NearestFilter;
 moonTexture.minFilter = THREE.NearestFilter;
-const moonMaterial = new THREE.MeshStandardMaterial({
+const moonMaterial = new THREE.MeshLambertMaterial({
 	map: moonTexture,
-	transparent: false,
 });
-const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(50, 16, 16), moonMaterial);
+const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(100, 16, 16), moonMaterial);
 moon.position.x = -120;
-moon.position.y = 100;
-moon.position.z = -300;
+moon.position.y = 151;
+moon.position.z = -400;
 moon.layers.set(1);
 scene.add(moon);
 
 scene.background = new THREE.Color(0x000E16);
 
 const cloudGeometry = new THREE.PlaneBufferGeometry(1300, 1000);
-import cloudTextureURL from './cloud.png';
 const cloudFragShader = document.getElementById('simplexFragmentShader').textContent;
 const cloudVertShader = document.getElementById('SimpleVertexShader').textContent;
-const cloudTexture = new THREE.TextureLoader().load(cloudTextureURL);
 const cloudUniforms = {
 	u_time: { value: 0 },
 	u_resolution: { value: 512 },
