@@ -124,25 +124,33 @@ ChatInstance.on("emotes", (emotes) => {
 
 window.requestAnimationFrame(draw);
 
-const light = new THREE.DirectionalLight(0xFFEE6D, 2);
-light.position.set(0.5, -0.5, -1);
+const light = new THREE.DirectionalLight(0xFFEE6D, 1);
+light.position.set(0.25, -0.6, -1);
 light.layers.set(1);
 scene.add(light);
-const ambient = new THREE.AmbientLight(0x000E16, 2);
+/*const ambient = new THREE.AmbientLight(0x000E16, 2);
 ambient.layers.set(1);
-scene.add(ambient);
+scene.add(ambient);*/
 
 
-import moonTextureUrl from './moon-texture.png';
+import moonTextureUrl from './moon-texture-contrast.png';
 const moonTexture = new THREE.TextureLoader().load(moonTextureUrl);
 moonTexture.magFilter = THREE.NearestFilter;
 moonTexture.minFilter = THREE.NearestFilter;
-const moonMaterial = new THREE.MeshLambertMaterial({
+const moonMaterial = new THREE.MeshPhongMaterial({
 	map: moonTexture,
+	shininess: 1,
+	specular: 0xFFFFFF,
+	emissive: 0x000E16,
 });
-const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(100, 16, 16), moonMaterial);
+/*const toonColors = [];
+const moonMaterial = new THREE.MeshToonMaterial({
+	gradientMap: new THREE.DataTexture([], )
+});*/
+const moonSize = 60;
+const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(moonSize, 16, 16), moonMaterial);
 moon.position.x = -120;
-moon.position.y = 151;
+moon.position.y = 50 + 1 + moonSize;
 moon.position.z = -400;
 moon.layers.set(1);
 scene.add(moon);
