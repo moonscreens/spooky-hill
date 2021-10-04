@@ -102,9 +102,14 @@
 			// Scale the space in order to see the function
 			st *= 10.;
 
-			float alpha = .5 - snoise(vec3(st.x, st.y, u_time * 0.1));
+			float alpha = .5 - snoise(vec3(st.x, st.y - u_time * 0.1, u_time * 0.01));
 			float mixVariable = alpha;
-			gl_FragColor = vec4(mix(dim.x, highlight.x, mixVariable), mix(dim.y, highlight.y, mixVariable), mix(dim.z, highlight.z, mixVariable), alpha);
+			gl_FragColor = vec4(
+				mix(dim.x, highlight.x, mixVariable),
+				mix(dim.y, highlight.y, mixVariable),
+				mix(dim.z, highlight.z, mixVariable),
+				min(1.0, alpha) * 0.9
+			);
 		}
 	</script>
 </head>
