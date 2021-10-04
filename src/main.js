@@ -54,9 +54,7 @@ function draw() {
 	// number of seconds since the last frame was drawn
 	const delta = (Date.now() - lastFrame) / 1000;
 
-	moon.rotation.x += delta * 0.01;
 	moon.rotation.y += delta * 0.01;
-	moon.rotation.z += delta * 0.01;
 
 	// update materials for animated emotes
 	for (const key in emoteMaterials) {
@@ -130,12 +128,12 @@ const light = new THREE.DirectionalLight(0xFFEE6D, 2);
 light.position.set(0.5, -0.5, -1);
 light.layers.set(1);
 scene.add(light);
-const ambient = new THREE.AmbientLight(0x001826, 1.5);
+const ambient = new THREE.AmbientLight(0x000E16, 2);
 ambient.layers.set(1);
 scene.add(ambient);
 
 
-import moonTextureUrl from './moon-texture-contrast.png';
+import moonTextureUrl from './moon-texture.png';
 const moonTexture = new THREE.TextureLoader().load(moonTextureUrl);
 moonTexture.magFilter = THREE.NearestFilter;
 moonTexture.minFilter = THREE.NearestFilter;
