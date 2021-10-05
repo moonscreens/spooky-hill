@@ -147,6 +147,7 @@ const moonMaterial = new THREE.MeshPhongMaterial({
 	specular: 0xFFFFFF,
 	emissive: 0x000E16,
 	bumpMap: moonDisplacementTexture,
+	bumpScale: 0.5,
 });
 /*const toonColors = [];
 const moonMaterial = new THREE.MeshToonMaterial({
