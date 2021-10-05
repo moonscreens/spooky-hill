@@ -125,7 +125,7 @@ ChatInstance.on("emotes", (emotes) => {
 window.requestAnimationFrame(draw);
 
 const light = new THREE.DirectionalLight(0xFFEE6D, 1);
-light.position.set(0.5, -0.4, -1);
+light.position.set(0.5, -0.4, -0.8);
 light.layers.set(1);
 scene.add(light);
 /*const ambient = new THREE.AmbientLight(0x000E16, 2);
