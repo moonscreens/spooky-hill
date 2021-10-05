@@ -54,7 +54,7 @@ function draw() {
 	// number of seconds since the last frame was drawn
 	const delta = (Date.now() - lastFrame) / 1000;
 
-	moon.rotation.y += delta * 0.01;
+	moon.rotation.y += delta * 0.02;
 
 	// update materials for animated emotes
 	for (const key in emoteMaterials) {
@@ -125,7 +125,7 @@ ChatInstance.on("emotes", (emotes) => {
 window.requestAnimationFrame(draw);
 
 const light = new THREE.DirectionalLight(0xFFEE6D, 1);
-light.position.set(0.25, -0.6, -1);
+light.position.set(0.5, -0.4, -1);
 light.layers.set(1);
 scene.add(light);
 /*const ambient = new THREE.AmbientLight(0x000E16, 2);
@@ -134,14 +134,19 @@ scene.add(ambient);*/
 
 
 import moonTextureUrl from './moon-texture-contrast.png';
+import moonDisplacementTextureUrl from './moon-displacement.png';
 const moonTexture = new THREE.TextureLoader().load(moonTextureUrl);
 moonTexture.magFilter = THREE.NearestFilter;
 moonTexture.minFilter = THREE.NearestFilter;
+const moonDisplacementTexture = new THREE.TextureLoader().load(moonDisplacementTextureUrl);
+moonDisplacementTexture.magFilter = THREE.NearestFilter;
+moonDisplacementTexture.minFilter = THREE.NearestFilter;
 const moonMaterial = new THREE.MeshPhongMaterial({
 	map: moonTexture,
 	shininess: 1,
 	specular: 0xFFFFFF,
 	emissive: 0x000E16,
+	bumpMap: moonDisplacementTexture,
 });
 /*const toonColors = [];
 const moonMaterial = new THREE.MeshToonMaterial({
@@ -152,6 +157,7 @@ const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(moonSize, 16, 16), mo
 moon.position.x = -120;
 moon.position.y = 50 + 1 + moonSize;
 moon.position.z = -400;
+moon.rotation.y = Math.PI * 2 * Math.random();
 moon.layers.set(1);
 scene.add(moon);
 
