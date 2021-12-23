@@ -93,7 +93,6 @@ function draw() {
 // add a callback function for when a new message with emotes is sent
 const emoteArray = [];
 ChatInstance.listen((emotes) => {
-	console.log(emotes.length)
 	const group = new THREE.Group();
 
 	group.dateSpawned = Date.now();
@@ -102,7 +101,7 @@ ChatInstance.listen((emotes) => {
 		Math.random() * 2 - 1,
 		Math.random() * 2 - 1,
 		Math.random() * 2 - 1,
-	).normalize().multiplyScalar(10);
+	).normalize().multiplyScalar(5);
 
 	for (let index = 0; index < emotes.length; index++) {
 		const emote = emotes[index];
