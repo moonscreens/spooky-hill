@@ -39,6 +39,7 @@ const ChatInstance = new TwitchChat({
 const camera = new THREE.PerspectiveCamera(39.6, window.innerWidth / window.innerHeight, 0.1, 2000);
 camera.layers.enable(1);
 camera.position.z = 20;
+camera.position.y = 0;
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({
@@ -117,10 +118,31 @@ ChatInstance.listen((emotes) => {
 
 window.requestAnimationFrame(draw);
 
-const light = new THREE.DirectionalLight(0xFFEE6D, 1);
-light.position.set(0.5, -0.4, -0.8);
-light.layers.set(1);
-scene.add(light);
+/*
+** Hill setup
+*/
+
+const hillGeometry = new THREE.SphereBufferGeometry(30, 32, 8, 0, Math.PI);
+import grassMaterial from './grass';
+const frontHill = new THREE.Mesh(hillGeometry, grassMaterial);
+frontHill.rotation.x = -Math.PI /2;
+frontHill.position.y = -33;
+frontHill.position.x = -5;
+scene.add(frontHill)
+
+
+const fog = new THREE.Fog(0x000E16, 1, 10);
+scene.add(fog);
+
+/*
+** Sky setup
+*/
+
+// Light hitting the moon
+const sunLight = new THREE.DirectionalLight(0xFFEE6D, 1);
+sunLight.position.set(0.5, -0.4, -0.8);
+sunLight.layers.set(1);
+scene.add(sunLight);
 /*const ambient = new THREE.AmbientLight(0x000E16, 2);
 ambient.layers.set(1);
 scene.add(ambient);*/
@@ -154,6 +176,11 @@ moon.position.z = -400;
 moon.rotation.y = Math.PI * 2 * Math.random();
 moon.layers.set(1);
 scene.add(moon);
+
+// light cast by the moon
+const moonLight = new THREE.DirectionalLight(0xfff396, 1);
+moonLight.position.copy(moon.position);
+scene.add(moonLight)
 
 scene.background = new THREE.Color(0x000E16);
 
