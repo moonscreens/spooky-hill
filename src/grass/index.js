@@ -1,3 +1,4 @@
+// Free texture from https://www.poliigon.com/textures/free
 import * as THREE from 'three';
 import colorMapUrl from './GroundForest003_COL_VAR2_1K.jpg';
 import glossMapUrl from './GroundForest003_GLOSS_1K.jpg';
