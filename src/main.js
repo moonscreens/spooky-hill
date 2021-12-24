@@ -123,7 +123,7 @@ window.requestAnimationFrame(draw);
 import hill from './objects/hill'
 scene.add(hill);
 
-scene.fog = new THREE.Fog(0x000E16, 20, 200);
+scene.fog = new THREE.Fog(0x000E16, 1, 500);
 
 /*
 ** Sky setup

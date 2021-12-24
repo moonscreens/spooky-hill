@@ -18,9 +18,12 @@ let uniforms = null;
 const canvas = document.createElement('canvas');
 canvas.width = 128;
 canvas.height = 128;
+canvas.fillStyle = "#ffffff";
+canvas.getContext('2d').fillRect(0,0,canvas.width,canvas.height);
 const material = new THREE.MeshBasicMaterial({
 	map: new THREE.CanvasTexture(canvas),
 	transparent: true,
+	blending: THREE.AdditiveBlending,
 });
 material.onBeforeCompile = function (shader) {
 	shader.uniforms.u_time = { value: Math.random() * 1000 };
@@ -33,8 +36,8 @@ material.onBeforeCompile = function (shader) {
 	uniform float u_time;
 	${snoise}
 	
-	${shader.fragmentShader.replace('#include <dithering_fragment>',`
-		#include <dithering_fragment>
+	${shader.fragmentShader.replace('#include <encodings_fragment>',`
+		#include <encodings_fragment>
 		${frag}
 	`)}`;
 };
