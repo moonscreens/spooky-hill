@@ -54,7 +54,7 @@ const renderer = new THREE.WebGLRenderer({
 	alpha: false
 });
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.BasicShadowMap;
+renderer.shadowMap.type = THREE.PCFShadowMap;
 
 document.body.appendChild(renderer.domElement);
 
@@ -106,11 +106,14 @@ ChatInstance.listen((emotes) => {
 
 	group.dateSpawned = Date.now();
 
-	group.velocity = new THREE.Vector3(
+	group.velocity = new THREE.Vector3(-1, 0, 0).normalize().multiplyScalar(5);
+	group.position.copy(house.position);
+	group.position.z += -10;
+	group.position.add(new THREE.Vector3(
 		Math.random() * 2 - 1,
 		Math.random() * 2 - 1,
 		Math.random() * 2 - 1,
-	).normalize().multiplyScalar(5);
+	))
 
 	for (let index = 0; index < emotes.length; index++) {
 		const emote = emotes[index];
@@ -174,12 +177,12 @@ moon.position.z += -400;
 scene.add(moon);
 
 // light cast by the moon
-const moonLight = new THREE.SpotLight(0xfff396, 1, 500, Math.PI * 0.2, 0.25, 0.2);
+const moonLight = new THREE.SpotLight(0xfff396, 1.5, 500, Math.PI * 0.2, 0.25, 0.2);
 moonLight.castShadow = true;
 moonLight.position.copy(moon.position);
 moonLight.lookAt(house.position);
-moonLight.shadow.mapSize.width = 2048;
-moonLight.shadow.mapSize.height = 2048;
+moonLight.shadow.mapSize.width = 2048 * 2;
+moonLight.shadow.mapSize.height = 2048 * 2;
 scene.add(moonLight)
 
 scene.background = new THREE.Color(0x000E16);

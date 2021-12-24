@@ -1,7 +1,7 @@
 // Free texture from https://www.poliigon.com/textures/free
 import * as THREE from 'three';
 import colorMapUrl from './COL_VAR2.jpg';
-import specularMapUrl from './GLOSS.jpg';
+import specularMapUrl from './REFL.jpg';
 import normalMapUrl from './NRM.jpg';
 
 const genWoodMaterial = (matOptions = {}, wrapX = 0.75, wrapY = false, resolution = 128) => {
