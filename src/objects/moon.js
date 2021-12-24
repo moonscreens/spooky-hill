@@ -13,6 +13,7 @@ const moonMaterial = new THREE.MeshPhongMaterial({
 	shininess: 1,
 	specular: 0xFFFFFF,
 	emissive: 0x000E16,
+	emissiveIntensity: 0.5,
 	bumpMap: moonDisplacementTexture,
 	bumpScale: 0.5,
 	fog: 0,

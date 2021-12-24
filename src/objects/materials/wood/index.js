@@ -1,26 +1,18 @@
 // Free texture from https://www.poliigon.com/textures/free
 import * as THREE from 'three';
-import colorMapUrl from './COL.jpg';
-import specularMapUrl from './SPECULAR.jpg';
+import colorMapUrl from './COL_VAR2.jpg';
+import specularMapUrl from './GLOSS.jpg';
 import normalMapUrl from './NRM.jpg';
-import aoMapUrl from './AO.jpg';
-import dispMapUrl from './DISP.jpg';
 
 
 const mat = new THREE.MeshPhongMaterial({
-	color: 0xffffff,
+    map: new THREE.CanvasTexture(document.createElement('canvas')),
     specularMap: new THREE.CanvasTexture(document.createElement('canvas')),
-	specular: 0.25,
     normalMap: new THREE.CanvasTexture(document.createElement('canvas')),
-	aoMap: new THREE.CanvasTexture(document.createElement('canvas')),
-	displacementMap: new THREE.CanvasTexture(document.createElement('canvas')),
-	displacementScale: 0.1,
 });
 
-
-const wrapCount = 2;
+const wrapCount = 0.75;
 const updateTxt = (texture) => {
-	if (!texture) return;
     texture.wrapS = wrapCount;
     texture.wrapT = wrapCount;
     texture.repeat.set(wrapCount, wrapCount);
@@ -39,15 +31,11 @@ function resizeTexture (texture, matTexture) {
 new THREE.TextureLoader().load(colorMapUrl, texture => {resizeTexture(texture, mat.map)})
 new THREE.TextureLoader().load(specularMapUrl, texture => {resizeTexture(texture, mat.specularMap)})
 new THREE.TextureLoader().load(normalMapUrl, texture => {resizeTexture(texture, mat.normalMap)})
-new THREE.TextureLoader().load(aoMapUrl, texture => {resizeTexture(texture, mat.aoMap)})
-new THREE.TextureLoader().load(dispMapUrl, texture => {resizeTexture(texture, mat.displacementMap)})
 
 
 updateTxt(mat.map);
 updateTxt(mat.specularMap);
 updateTxt(mat.normalMap);
-updateTxt(mat.aoMap);
-updateTxt(mat.displacementMap);
 
 export default mat;
 

@@ -20,10 +20,10 @@ canvas.width = 128;
 canvas.height = 128;
 canvas.fillStyle = "#ffffff";
 canvas.getContext('2d').fillRect(0,0,canvas.width,canvas.height);
-const material = new THREE.MeshBasicMaterial({
+const material = new THREE.MeshLambertMaterial({
 	map: new THREE.CanvasTexture(canvas),
 	transparent: true,
-	blending: THREE.AdditiveBlending,
+	emissive: 0x042847,
 });
 material.onBeforeCompile = function (shader) {
 	shader.uniforms.u_time = { value: Math.random() * 1000 };

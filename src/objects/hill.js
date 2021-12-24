@@ -3,11 +3,15 @@ import grassMaterial from './materials/grass';
 
 const scene = new THREE.Group();
 
-const hillGeometry = new THREE.SphereBufferGeometry(30, 32, 8, 0, Math.PI);
+const hillSize = 50;
+
+const hillGeometry = new THREE.SphereBufferGeometry(hillSize, 64, 64, 0, Math.PI);
 const frontHill = new THREE.Mesh(hillGeometry, grassMaterial);
 frontHill.rotation.x = -Math.PI /2;
-frontHill.position.y = -33;
-frontHill.position.x = 5;
+frontHill.position.y = -hillSize - 3;
 scene.add(frontHill);
+
+frontHill.castShadow = true;
+frontHill.receiveShadow = true;
 
 export default scene;

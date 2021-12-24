@@ -1,4 +1,4 @@
-vec3 dim = vec3(0.0, 0.09, 0.149);
+vec3 dim = vec3(0.0, 0.0902, 0.149);
 // original vec3(1.0, 0.93, 0.43);
 vec3 highlight = vec3(255.0, 255.0, 255.0);
 

@@ -39,15 +39,24 @@ const ChatInstance = new TwitchChat({
 const camera = new THREE.PerspectiveCamera(39.6, window.innerWidth / window.innerHeight, 0.1, 2000);
 camera.layers.enable(1);
 camera.position.z = 20;
-camera.position.y = 0;
+
+if (query_vars.orbit) {
+	setInterval(()=>{
+		camera.position.x = Math.sin(Date.now() / 10000) * 26;
+		camera.position.z = Math.cos(Date.now() / 10000) * 26;
+		camera.lookAt(0,0,0)
+	}, 16)
+}
 
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({
 	antialias: false,
 	alpha: false
 });
-document.body.appendChild(renderer.domElement);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.BasicShadowMap;
 
+document.body.appendChild(renderer.domElement);
 
 function resize() {
 	renderer.setSize(window.innerWidth, window.innerHeight);
@@ -120,14 +129,34 @@ window.requestAnimationFrame(draw);
 /*
 ** Hill setup
 */
+import terrain from './objects/terrain';
+const terrainScale = 10;
+terrain.position.y = -terrainScale;
+terrain.position.z = -50 * terrainScale;
+terrain.rotation.x += Math.PI * 0.01;
+terrain.scale.setScalar(terrainScale)
+terrain.castShadow = true;
+terrain.receiveShadow = true;
+scene.add(terrain);
+
 import hill from './objects/hill'
+hill.position.x = 5;
+hill.castShadow = true;
+hill.receiveShadow = true;
 scene.add(hill);
+
+import house from './objects/house';
+house.position.x = hill.position.x + 4.5;
+house.position.y = -1;
+scene.add(house);
 
 scene.fog = new THREE.Fog(0x000E16, 1, 500);
 
 /*
 ** Sky setup
 */
+
+scene.add(new THREE.AmbientLight(0x000E16, 1))
 
 // Light hitting the moon
 const sunLight = new THREE.DirectionalLight(0xFFEE6D, 1);
@@ -145,8 +174,12 @@ moon.position.z += -400;
 scene.add(moon);
 
 // light cast by the moon
-const moonLight = new THREE.DirectionalLight(0xfff396, 1);
+const moonLight = new THREE.SpotLight(0xfff396, 1, 500, Math.PI * 0.2, 0.25, 0.2);
+moonLight.castShadow = true;
 moonLight.position.copy(moon.position);
+moonLight.lookAt(house.position);
+moonLight.shadow.mapSize.width = 2048;
+moonLight.shadow.mapSize.height = 2048;
 scene.add(moonLight)
 
 scene.background = new THREE.Color(0x000E16);
