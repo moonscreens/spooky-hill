@@ -153,7 +153,7 @@ house.position.x = hill.position.x + 4.5;
 house.position.y = -1;
 scene.add(house);
 
-scene.fog = new THREE.Fog(0x000E16, 1, 500);
+scene.fog = new THREE.Fog(0x000E16, 1, 400);
 
 /*
 ** Sky setup
