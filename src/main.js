@@ -84,7 +84,6 @@ function draw() {
 		}
 	}
 
-	cloudUniforms.u_time.value += delta;
 	renderer.render(scene, camera);
 
 	lastFrame = Date.now();
@@ -121,18 +120,10 @@ window.requestAnimationFrame(draw);
 /*
 ** Hill setup
 */
+import hill from './objects/hill'
+scene.add(hill);
 
-const hillGeometry = new THREE.SphereBufferGeometry(30, 32, 8, 0, Math.PI);
-import grassMaterial from './grass';
-const frontHill = new THREE.Mesh(hillGeometry, grassMaterial);
-frontHill.rotation.x = -Math.PI /2;
-frontHill.position.y = -33;
-frontHill.position.x = -5;
-scene.add(frontHill)
-
-
-const fog = new THREE.Fog(0x000E16, 1, 10);
-scene.add(fog);
+scene.fog = new THREE.Fog(0x000E16, 20, 200);
 
 /*
 ** Sky setup
@@ -147,34 +138,10 @@ scene.add(sunLight);
 ambient.layers.set(1);
 scene.add(ambient);*/
 
-
-import moonTextureUrl from './moon-texture-contrast.png';
-import moonDisplacementTextureUrl from './moon-displacement.png';
-const moonTexture = new THREE.TextureLoader().load(moonTextureUrl);
-moonTexture.magFilter = THREE.NearestFilter;
-moonTexture.minFilter = THREE.NearestFilter;
-const moonDisplacementTexture = new THREE.TextureLoader().load(moonDisplacementTextureUrl);
-moonDisplacementTexture.magFilter = THREE.NearestFilter;
-moonDisplacementTexture.minFilter = THREE.NearestFilter;
-const moonMaterial = new THREE.MeshPhongMaterial({
-	map: moonTexture,
-	shininess: 1,
-	specular: 0xFFFFFF,
-	emissive: 0x000E16,
-	bumpMap: moonDisplacementTexture,
-	bumpScale: 0.5,
-});
-/*const toonColors = [];
-const moonMaterial = new THREE.MeshToonMaterial({
-	gradientMap: new THREE.DataTexture([], )
-});*/
-const moonSize = 60;
-const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(moonSize, 16, 16), moonMaterial);
-moon.position.x = -120;
-moon.position.y = 50 + 1 + moonSize;
-moon.position.z = -400;
-moon.rotation.y = Math.PI * 2 * Math.random();
-moon.layers.set(1);
+import moon from './objects/moon';
+moon.position.x += -120;
+moon.position.y += 50;
+moon.position.z += -400;
 scene.add(moon);
 
 // light cast by the moon
@@ -185,18 +152,7 @@ scene.add(moonLight)
 scene.background = new THREE.Color(0x000E16);
 
 const cloudGeometry = new THREE.PlaneBufferGeometry(1300, 1000);
-const cloudFragShader = document.getElementById('simplexFragmentShader').textContent;
-const cloudVertShader = document.getElementById('SimpleVertexShader').textContent;
-const cloudUniforms = {
-	u_time: { value: 0 },
-	u_resolution: { value: 512 },
-}
-const cloudMaterial = new THREE.ShaderMaterial({
-	uniforms: cloudUniforms,
-	vertexShader: cloudVertShader,
-	fragmentShader: cloudFragShader,
-	transparent: true,
-})
+import cloudMaterial from './objects/materials/clouds';
 const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
 cloud.position.y = 50;
 cloud.position.z = -620;

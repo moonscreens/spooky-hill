@@ -36,6 +36,10 @@ module.exports = {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
             },
+            {
+                test: /(\.frag$|\.vert$|\.glsl$)/i,
+                use: 'raw-loader',
+            },
         ],
     },
 };
