@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import genWoodMaterial from './materials/wood';
 import genWood2Material from './materials/wood2';
 import genMetalMaterial from './materials/metal';
+import generateWindow from './window';
 
 const scene = new THREE.Group();
 
@@ -15,12 +16,43 @@ const house = new THREE.Mesh(
 house.position.y += houseSize * 0.125;
 scene.add(house);
 
+const sideWindow = generateWindow(1.5, 2);
+sideWindow.position.z = houseSize * 0.5;
+sideWindow.position.y = -.5;
+house.add(sideWindow);
+
+const frontLeftWindow = generateWindow(1, 1.5);
+frontLeftWindow.position.x = -houseSize*.5;
+frontLeftWindow.position.z = -2;
+frontLeftWindow.position.y = -0.25;
+frontLeftWindow.rotation.y = -Math.PI * .5;
+house.add(frontLeftWindow);
+
+const frontRightWindow = generateWindow(1, 1.5);
+frontRightWindow.position.x = -houseSize*.5;
+frontRightWindow.position.z = 2;
+frontRightWindow.position.y = -0.25;
+frontRightWindow.rotation.y = -Math.PI * .5;
+house.add(frontRightWindow);
+
+
 const door = new THREE.Mesh(
 	new THREE.BoxBufferGeometry(0.1, 3, 1.5),
 	genWood2Material({}, 0.5, 2)
 );
-door.position.x = -houseSize*0.5;
+door.position.x = -houseSize * 0.5;
 scene.add(door);
+
+const stepCount = 5;
+const stepSize = 0.25;
+const stepGeometry = new THREE.BoxBufferGeometry(stepSize, stepSize, 2);
+const stepMaterial = genWoodMaterial();
+for (let index = 0; index < stepCount; index++) {
+	const step = new THREE.Mesh(stepGeometry, stepMaterial);
+	step.position.x = (-houseSize * .5) - (stepSize * index) - stepSize;
+	step.position.y = (-1.5) - (stepSize * index);
+	scene.add(step);
+}
 
 const houseBase = new THREE.Mesh(
 	new THREE.BoxBufferGeometry(houseSize * 1.05, houseSize * 0.1, houseSize * 1.05),
