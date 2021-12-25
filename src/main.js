@@ -177,7 +177,7 @@ moon.position.z += -400;
 scene.add(moon);
 
 // light cast by the moon
-const moonLight = new THREE.SpotLight(0xfff396, 1.5, 500, Math.PI * 0.2, 0.25, 0.2);
+const moonLight = new THREE.SpotLight(0xfff396, 1, 500, Math.PI * 0.2, 0.25, 0.2);
 moonLight.castShadow = true;
 moonLight.position.copy(moon.position);
 moonLight.lookAt(house.position);
