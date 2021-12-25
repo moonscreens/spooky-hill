@@ -51,7 +51,7 @@ if (query_vars.orbit) {
 const scene = new THREE.Scene();
 const renderer = new THREE.WebGLRenderer({
 	antialias: false,
-	alpha: false
+	alpha: false,
 });
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFShadowMap;
