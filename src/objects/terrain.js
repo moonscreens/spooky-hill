@@ -5,7 +5,7 @@ import grassMaterial from './materials/grass';
 const simplex = new SimplexNoise();
 
 
-const segments = 200;
+const segments = 170;
 
 
 const geometry = new THREE.PlaneGeometry( 100, 100, segments, segments );
