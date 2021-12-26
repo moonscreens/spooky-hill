@@ -48,7 +48,7 @@ const generateWindow = (width = 1, height = 2, castLight = true) => {
 		lightTarget.position.y = -0.5;
 		scene.add(lightTarget);
 
-		const light = new THREE.SpotLight(0xd4c33b, 0.25, 7, Math.PI * .35, 0, 0);
+		const light = new THREE.SpotLight(0xd4c33b, 0.5, 15, Math.PI * .35, 0, 1);
 		light.position.set(0, 0, 0);
 		light.target = lightTarget;
 		scene.add(light);
