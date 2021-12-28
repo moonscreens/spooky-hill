@@ -59,9 +59,9 @@ window.requestAnimationFrame(() => {
 		sign.position.x -= 0.07
 		signPost.add(sign);
 		signPost.rotation.y = rotation;
-		const signtext = generateSign(1, 0.75, 50, text, "#aa0000", 20);
+		const signtext = generateSign(1, 0.75, 60, text, "#aa0000", 20);
 		signtext.rotation.y = -Math.PI * 0.5;
-		signtext.position.x = -0.0751;
+		signtext.position.x = -0.076;
 		sign.add(signtext);
 	}
 
