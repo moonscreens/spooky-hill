@@ -134,9 +134,9 @@ window.requestAnimationFrame(draw);
 */
 import terrain from './objects/terrain';
 const terrainScale = 10;
-terrain.position.y = -terrainScale;
-terrain.position.z = -50 * terrainScale;
-terrain.rotation.x += Math.PI * 0.01;
+terrain.position.y = -terrainScale + 0.5;
+terrain.position.z = -55 * terrainScale;
+terrain.rotation.x += Math.PI * 0.015;
 terrain.scale.setScalar(terrainScale)
 terrain.castShadow = true;
 terrain.receiveShadow = true;
