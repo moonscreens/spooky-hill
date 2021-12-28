@@ -7,7 +7,7 @@ const generateWindow = (width = 1, height = 2, castLight = true) => {
 	const boxLight = new THREE.Mesh(
 		new THREE.BoxBufferGeometry(width, height, 0.1),
 		new THREE.MeshBasicMaterial({
-			color: 0xd4c33b,
+			color: 0xffef6e,
 		})
 	);
 	scene.add(boxLight);
@@ -48,7 +48,7 @@ const generateWindow = (width = 1, height = 2, castLight = true) => {
 		lightTarget.position.y = -0.5;
 		scene.add(lightTarget);
 
-		const light = new THREE.SpotLight(0xd4c33b, 0.5, 15, Math.PI * .35, 0, 1);
+		const light = new THREE.SpotLight(0xffef6e, 0.5, 15, Math.PI * .35, 0, 1);
 		light.position.set(0, 0, 0);
 		light.target = lightTarget;
 		scene.add(light);

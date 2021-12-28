@@ -87,10 +87,10 @@ genHouseColumn(0, -1);
 genHouseColumn(0, 1);
 
 
-const generateRoofSegment = (matOptions) => {
+const generateRoofSegment = (matOptions, useMat = true) => {
 	const roofSegment = new THREE.Mesh(
 		new THREE.PlaneBufferGeometry(houseSize * 1.1, houseSize, 512, 1),
-		genMetalMaterial(matOptions)
+		useMat ? genMetalMaterial(matOptions) : new THREE.MeshBasicMaterial(matOptions)
 	);
 	roofSegment.position.y = houseSize * 0.65;
 	scene.add(roofSegment);
@@ -100,7 +100,7 @@ const frontRoof = generateRoofSegment();
 frontRoof.position.z = houseSize * 0.35;
 frontRoof.rotation.x = -Math.PI * 0.25;
 
-const backRoof = generateRoofSegment({ side: THREE.BackSide, normalScale: 0 });
+const backRoof = generateRoofSegment({ side: THREE.BackSide, normalScale: 0, color: 0x000000 }, false);
 backRoof.position.z = -houseSize * 0.35;
 backRoof.rotation.x = Math.PI * 0.25 + Math.PI;
 
