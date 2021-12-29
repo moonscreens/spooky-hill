@@ -60,8 +60,8 @@ window.requestAnimationFrame(() => {
 			dummy.position.y = mesh.geometry.attributes.position.array[point - 2] + treeSize;
 			dummy.position.z = mesh.geometry.attributes.position.array[point - 1];*/
 
-			dummy.position.x = Math.random() * 100 - 50;
-			dummy.position.z = Math.random() * 100 - 50;
+			dummy.position.x = (Math.random() - 0.5) * 99;
+			dummy.position.z = (Math.random() - 0.5) * 99;
 			dummy.position.y = treeSize * 0.5 + getNoise(-dummy.position.z, dummy.position.x);
 
 			dummy.updateMatrix();
