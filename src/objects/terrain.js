@@ -55,14 +55,14 @@ window.requestAnimationFrame(() => {
 		const dummy = new THREE.Object3D();
 
 		for (let i = 0; i < 5000; i++) {
-			const point = Math.floor(Math.random() * mesh.geometry.attributes.position.count) * 3;
+			/*const point = Math.floor(Math.random() * mesh.geometry.attributes.position.count) * 3;
 			dummy.position.x = mesh.geometry.attributes.position.array[point];
 			dummy.position.y = mesh.geometry.attributes.position.array[point - 2] + treeSize;
-			dummy.position.z = mesh.geometry.attributes.position.array[point - 1];
+			dummy.position.z = mesh.geometry.attributes.position.array[point - 1];*/
 
-			/*dummy.position.x = Math.random() * 100 - 50;
-			dummy.position.y = treeSize + getNoise(dummy.position.x, dummy.position.z);
-			dummy.position.z = Math.random() * 100 - 50;*/
+			dummy.position.x = Math.random() * 100 - 50;
+			dummy.position.z = Math.random() * 100 - 50;
+			dummy.position.y = treeSize * 0.5 + getNoise(-dummy.position.z, dummy.position.x);
 
 			dummy.updateMatrix();
 			treeMesh.setMatrixAt(i, dummy.matrix);
