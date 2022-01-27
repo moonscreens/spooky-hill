@@ -5,52 +5,25 @@ import specularMapUrl from './SPECULAR.jpg';
 import normalMapUrl from './NRM.jpg';
 import aoMapUrl from './AO.jpg';
 import dispMapUrl from './DISP.jpg';
+import { applyTexture, loadImage, newCanvas } from '../matUtils';
 
 
 const genMetalMaterial = (matOptions = {}, wrapX = 0.75, wrapY = false, resolution = 128) => {
-	if (!wrapY) wrapY = wrapX;
 	const mat = new THREE.MeshPhongMaterial({
 		color: 0xffffff,
-		specularMap: new THREE.CanvasTexture(document.createElement('canvas')),
+		specularMap: new THREE.CanvasTexture(newCanvas(resolution)),
 		specular: 0.25,
-		normalMap: new THREE.CanvasTexture(document.createElement('canvas')),
-		aoMap: new THREE.CanvasTexture(document.createElement('canvas')),
-		displacementMap: new THREE.CanvasTexture(document.createElement('canvas')),
+		normalMap: new THREE.CanvasTexture(newCanvas(resolution)),
+		aoMap: new THREE.CanvasTexture(newCanvas(resolution)),
+		displacementMap: new THREE.CanvasTexture(newCanvas(resolution)),
 		displacementScale: 0.1,
-
 		...matOptions,
 	});
 
-
-	const updateTxt = (texture) => {
-		if (!texture) return;
-		texture.wrapS = wrapX;
-		texture.wrapT = wrapY;
-		texture.repeat.set(wrapX, wrapY);
-		texture.magFilter = THREE.NearestFilter;
-	}
-
-	function resizeTexture(texture, matTexture) {
-		const canvas = matTexture.image;
-		const ctx = canvas.getContext('2d');
-		canvas.width = resolution;
-		canvas.height = resolution;
-		ctx.drawImage(texture.image, 0, 0, canvas.width, canvas.height);
-		matTexture.needsUpdate = true;
-	}
-
-	new THREE.TextureLoader().load(colorMapUrl, texture => { resizeTexture(texture, mat.map) })
-	new THREE.TextureLoader().load(specularMapUrl, texture => { resizeTexture(texture, mat.specularMap) })
-	new THREE.TextureLoader().load(normalMapUrl, texture => { resizeTexture(texture, mat.normalMap) })
-	new THREE.TextureLoader().load(aoMapUrl, texture => { resizeTexture(texture, mat.aoMap) })
-	new THREE.TextureLoader().load(dispMapUrl, texture => { resizeTexture(texture, mat.displacementMap) })
-
-
-	updateTxt(mat.map);
-	updateTxt(mat.specularMap);
-	updateTxt(mat.normalMap);
-	updateTxt(mat.aoMap);
-	updateTxt(mat.displacementMap);
+	loadImage(specularMapUrl, texture => { applyTexture(texture, mat.specularMap, resolution, wrapX); mat.needsUpdate = true; });
+	loadImage(normalMapUrl, texture => { applyTexture(texture, mat.normalMap, resolution, wrapX); mat.needsUpdate = true; });
+	loadImage(aoMapUrl, texture => { applyTexture(texture, mat.aoMap, resolution, wrapX); mat.needsUpdate = true; });
+	loadImage(dispMapUrl, texture => { applyTexture(texture, mat.displacementMap, resolution, wrapX); mat.needsUpdate = true; });
 	return mat;
 };
 
