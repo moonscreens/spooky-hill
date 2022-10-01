@@ -14,7 +14,7 @@ const generateSign = (width = 2, height = 1, resolution = 20, text = "spooky hou
 	ctx.textBaseline = "middle"
 	ctx.fillText(text, width * resolution * 0.5, height * resolution * 0.5, width * resolution);
 
-	const geometry = new THREE.PlaneBufferGeometry(width, height);
+	const geometry = new THREE.PlaneGeometry(width, height);
 	const material = new THREE.MeshBasicMaterial({
 		map: new THREE.CanvasTexture(canvas),
 		side: THREE.DoubleSide,

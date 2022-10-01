@@ -10,7 +10,7 @@ const houseSize = 7;
 const houseHeight = houseSize * 0.75;
 
 const house = new THREE.Mesh(
-	new THREE.BoxBufferGeometry(houseSize, houseHeight, houseSize),
+	new THREE.BoxGeometry(houseSize, houseHeight, houseSize),
 	genWoodMaterial(),
 );
 house.position.y += houseSize * 0.125;
@@ -37,7 +37,7 @@ house.add(frontRightWindow);
 
 
 const door = new THREE.Mesh(
-	new THREE.BoxBufferGeometry(0.1, 3, 1.5),
+	new THREE.BoxGeometry(0.1, 3, 1.5),
 	genWood2Material({}, 0.5, 2)
 );
 door.position.x = -houseSize * 0.5;
@@ -45,7 +45,7 @@ scene.add(door);
 
 const stepCount = 5;
 const stepSize = 0.25;
-const stepGeometry = new THREE.BoxBufferGeometry(stepSize, stepSize, 2);
+const stepGeometry = new THREE.BoxGeometry(stepSize, stepSize, 2);
 const stepMaterial = genWoodMaterial();
 for (let index = 0; index < stepCount; index++) {
 	const step = new THREE.Mesh(stepGeometry, stepMaterial);
@@ -55,14 +55,14 @@ for (let index = 0; index < stepCount; index++) {
 }
 
 const houseBase = new THREE.Mesh(
-	new THREE.BoxBufferGeometry(houseSize * 1.05, houseSize * 0.1, houseSize * 1.05),
+	new THREE.BoxGeometry(houseSize * 1.05, houseSize * 0.1, houseSize * 1.05),
 	genWood2Material({}, 1, 0.15, 128),
 );
 scene.add(houseBase);
 houseBase.position.copy(house.position);
 houseBase.position.y -= houseHeight * 0.5;
 
-const columnGeometry = new THREE.BoxBufferGeometry(houseSize * 0.05, houseSize, houseSize * 0.05);
+const columnGeometry = new THREE.BoxGeometry(houseSize * 0.05, houseSize, houseSize * 0.05);
 const columnMaterial = genWoodMaterial(
 	{},
 	1 - 10 / 11, // 11 planks in the texture
@@ -89,7 +89,7 @@ genHouseColumn(0, 1);
 
 const generateRoofSegment = (matOptions, useMat = true) => {
 	const roofSegment = new THREE.Mesh(
-		new THREE.PlaneBufferGeometry(houseSize * 1.1, houseSize, 512, 1),
+		new THREE.PlaneGeometry(houseSize * 1.1, houseSize, 512, 1),
 		useMat ? genMetalMaterial(matOptions) : new THREE.MeshBasicMaterial(matOptions)
 	);
 	roofSegment.position.y = houseSize * 0.65;

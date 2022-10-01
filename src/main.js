@@ -189,7 +189,7 @@ scene.add(moonLight)
 
 scene.background = new THREE.Color(0x000E16);
 
-const cloudGeometry = new THREE.PlaneBufferGeometry(1300, 1000);
+const cloudGeometry = new THREE.PlaneGeometry(1300, 1000);
 import cloudMaterial from './objects/materials/clouds';
 const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
 cloud.position.y = 50;

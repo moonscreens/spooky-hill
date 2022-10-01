@@ -19,7 +19,7 @@ const moonMaterial = new THREE.MeshPhongMaterial({
 	fog: 0,
 });
 const moonSize = 60;
-const moon = new THREE.Mesh(new THREE.SphereBufferGeometry(moonSize, 16, 16), moonMaterial);
+const moon = new THREE.Mesh(new THREE.SphereGeometry(moonSize, 16, 16), moonMaterial);
 moon.position.y = 1 + moonSize;
 moon.rotation.y = Math.PI * 2 * Math.random();
 moon.layers.set(1);

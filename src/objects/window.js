@@ -5,15 +5,15 @@ const generateWindow = (width = 1, height = 2, castLight = true) => {
 	const scene = new THREE.Group();
 
 	const boxLight = new THREE.Mesh(
-		new THREE.BoxBufferGeometry(width, height, 0.1),
+		new THREE.BoxGeometry(width, height, 0.1),
 		new THREE.MeshBasicMaterial({
 			color: 0xffef6e,
 		})
 	);
 	scene.add(boxLight);
 
-	const columnGeometry = new THREE.BoxBufferGeometry(0.1, height + 0.1, 0.2);
-	const rowGeometry = new THREE.BoxBufferGeometry(width + 0.1, 0.1, 0.2);
+	const columnGeometry = new THREE.BoxGeometry(0.1, height + 0.1, 0.2);
+	const rowGeometry = new THREE.BoxGeometry(width + 0.1, 0.1, 0.2);
 
 	const frameMaterial = genWood2Material();
 

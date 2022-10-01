@@ -44,7 +44,7 @@ window.requestAnimationFrame(() => {
 		});
 		treeMaterial.map.magFilter = THREE.NearestFilter;
 		treeMaterial.map.minFilter = THREE.NearestFilter;
-		const treeGeometry = new THREE.PlaneBufferGeometry(treeSize * 0.5, treeSize, 1, 1);
+		const treeGeometry = new THREE.PlaneGeometry(treeSize * 0.5, treeSize, 1, 1);
 
 		const treeMesh = new THREE.InstancedMesh(
 			treeGeometry,

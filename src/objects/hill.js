@@ -7,7 +7,7 @@ const scene = new THREE.Group();
 
 const hillSize = 50;
 
-const hillGeometry = new THREE.SphereBufferGeometry(hillSize, 64, 64, 0, Math.PI);
+const hillGeometry = new THREE.SphereGeometry(hillSize, 64, 64, 0, Math.PI);
 const frontHill = new THREE.Mesh(hillGeometry, grassMaterial);
 frontHill.rotation.x = -Math.PI / 2;
 frontHill.position.y = -hillSize - 3.5;
@@ -39,7 +39,7 @@ window.requestAnimationFrame(() => {
 
 	const generatePost = (x = 0, z = 0, postHeight = 1.5, postWidth = 0.15) => {
 		const postMaterial = genWoodMaterial({}, 1 - 10 / 11, 1);
-		const postGeometry = new THREE.BoxBufferGeometry(postWidth, postHeight, postWidth);
+		const postGeometry = new THREE.BoxGeometry(postWidth, postHeight, postWidth);
 		const sign = new THREE.Mesh(postGeometry, postMaterial);
 		plantObject(x, z, sign);
 		sign.position.y += postHeight * 0.5;
@@ -52,7 +52,7 @@ window.requestAnimationFrame(() => {
 	const newSign = (x, y, rotation, text) => {
 		const signPost = generatePost(x, y);
 		const sign = new THREE.Mesh(
-			new THREE.BoxBufferGeometry(0.15, 0.75, 1),
+			new THREE.BoxGeometry(0.15, 0.75, 1),
 			genWoodMaterial()
 		)
 		sign.position.y += 0.3
