@@ -151,6 +151,8 @@ const modelLoader = new GLTFLoader();
 modelLoader.load('/scene.glb', (gltf) => {
 	loopAll(gltf.scene, (element) => {
 		element.material.flatShading = true;
+		element.castShadow = true;
+		element.receiveShadow = true;
 	})
 	scene.add(gltf.scene);
 });
