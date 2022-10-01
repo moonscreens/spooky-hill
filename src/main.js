@@ -3,6 +3,8 @@ import * as THREE from "three";
 import TwitchChat from 'twitch-chat-emotes-threejs';
 import Stats from "stats-js";
 
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+
 // a default array of twitch channels to join
 let channels = ['moonmoon'];
 
@@ -43,10 +45,10 @@ camera.layers.enable(1);
 camera.position.z = 20;
 
 if (query_vars.orbit) {
-	setInterval(()=>{
+	setInterval(() => {
 		camera.position.x = Math.sin(Date.now() / 10000) * 26;
 		camera.position.z = Math.cos(Date.now() / 10000) * 26;
-		camera.lookAt(0,0,0)
+		camera.lookAt(0, 0, 0)
 	}, 16)
 }
 
@@ -109,7 +111,7 @@ ChatInstance.listen((emotes) => {
 	group.dateSpawned = Date.now();
 
 	group.velocity = new THREE.Vector3(-1, 0, 0).normalize().multiplyScalar(5);
-	group.position.copy(house.position);
+	group.position.copy(spawn.position);
 	group.position.z += -10;
 	group.position.add(new THREE.Vector3(
 		Math.random() * 2 - 1,
@@ -131,29 +133,29 @@ ChatInstance.listen((emotes) => {
 
 window.requestAnimationFrame(draw);
 
+function loopAll (object, callback) {
+	for (let index = 0; index < object.children.length; index++) {
+		const element = object.children[index];
+		callback(element);
+		if (element.children && element.children.length >0) {
+			loopAll(element, callback);
+		}
+	}
+}
+
 /*
-** Hill setup
+** Scene setup
 */
-import terrain from './objects/terrain';
-const terrainScale = 10;
-terrain.position.y = -terrainScale + 0.5;
-terrain.position.z = -55 * terrainScale;
-terrain.rotation.x += Math.PI * 0.015;
-terrain.scale.setScalar(terrainScale)
-terrain.castShadow = true;
-terrain.receiveShadow = true;
-scene.add(terrain);
 
-import hill from './objects/hill'
-hill.position.x = 5;
-hill.castShadow = true;
-hill.receiveShadow = true;
-scene.add(hill);
+const modelLoader = new GLTFLoader();
+modelLoader.load('/scene.glb', (gltf) => {
+	loopAll(gltf.scene, (element) => {
+		element.material.flatShading = true;
+	})
+	scene.add(gltf.scene);
+});
 
-import house from './objects/house';
-house.position.x = hill.position.x + 4.5;
-house.position.y = -1;
-scene.add(house);
+const spawn = new THREE.Object3D();
 
 scene.fog = new THREE.Fog(0x000E16, 1, 400);
 
@@ -182,7 +184,7 @@ scene.add(moon);
 const moonLight = new THREE.SpotLight(0xfff396, 1, 500, Math.PI * 0.2, 0.25, 0.2);
 moonLight.castShadow = true;
 moonLight.position.copy(moon.position);
-moonLight.lookAt(house.position);
+moonLight.lookAt(0, 0, 0);
 moonLight.shadow.mapSize.width = 2048 * 2;
 moonLight.shadow.mapSize.height = 2048 * 2;
 scene.add(moonLight)
