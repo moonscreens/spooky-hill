@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/moonscreens/intro-example-threejs#readme",
   "dependencies": {
+    "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^5.2.6",
     "file-loader": "^6.2.0",
     "html-loader": "^2.1.2",
@@ -28,10 +29,10 @@
     "style-loader": "^3.1.0",
     "three": "^0.145.0",
     "twitch-chat-emotes-threejs": "^0.3.9",
-    "webpack": "^5.44.0",
-    "webpack-cli": "^4.7.2"
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.2"
+    "webpack-dev-server": "^4.11.1"
   }
 }
