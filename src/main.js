@@ -40,7 +40,7 @@ const ChatInstance = new TwitchChat({
 	maximumEmoteLimit: 3,
 })
 
-const camera = new THREE.PerspectiveCamera(39.6, window.innerWidth / window.innerHeight, 0.1, 2000);
+let camera = new THREE.PerspectiveCamera(39.6, window.innerWidth / window.innerHeight, 0.1, 2000);
 camera.layers.enable(1);
 camera.position.z = 20;
 
@@ -80,7 +80,7 @@ function draw() {
 	// number of seconds since the last frame was drawn
 	const delta = (Date.now() - lastFrame) / 1000;
 
-	moon.rotation.y += delta * 0.02;
+	if (typeof moon !== 'undefined') moon.rotation.y += delta * 0.02;
 
 	for (let index = emoteArray.length - 1; index >= 0; index--) {
 		const element = emoteArray[index];
@@ -133,11 +133,11 @@ ChatInstance.listen((emotes) => {
 
 window.requestAnimationFrame(draw);
 
-function loopAll (object, callback) {
+function loopAll(object, callback) {
 	for (let index = 0; index < object.children.length; index++) {
 		const element = object.children[index];
 		callback(element);
-		if (element.children && element.children.length >0) {
+		if (element.children && element.children.length > 0) {
 			loopAll(element, callback);
 		}
 	}
@@ -149,10 +149,36 @@ function loopAll (object, callback) {
 
 const modelLoader = new GLTFLoader();
 modelLoader.load('/scene.glb', (gltf) => {
+	camera = gltf.cameras[0];
+	resize();
 	loopAll(gltf.scene, (element) => {
-		element.material.flatShading = true;
-		element.castShadow = true;
-		element.receiveShadow = true;
+		if (element.material) {
+			element.material.flatShading = true;
+			if (element.name.includes("Hill")) {
+				element.receiveShadow = true;
+			} else if (element.name !== 'Moon') {
+				element.castShadow = true;
+				element.receiveShadow = true;
+			}
+			for (const key in element.material) {
+				if (Object.hasOwnProperty.call(element.material, key) && element.material[key]) {
+					const prop = element.material[key];
+					if (prop.isTexture) {
+						prop.magFilter = THREE.NearestFilter
+					}
+				}
+			}
+		}
+		if (element.isLight) {
+			element.power *= 0.015;
+		}
+
+		if (element.name === 'MoonLight') {
+			element.castShadow = true;
+			element.lookAt(0, 0, 0);
+			element.shadow.mapSize.width = 2048 * 2;
+			element.shadow.mapSize.height = 2048 * 2;
+		}
 	})
 	scene.add(gltf.scene);
 });
@@ -167,29 +193,6 @@ scene.fog = new THREE.Fog(0x000E16, 1, 400);
 
 scene.add(new THREE.AmbientLight(0x000E16, 1))
 
-// Light hitting the moon
-const sunLight = new THREE.DirectionalLight(0xFFEE6D, 1);
-sunLight.position.set(0.5, -0.4, -0.8);
-sunLight.layers.set(1);
-scene.add(sunLight);
-/*const ambient = new THREE.AmbientLight(0x000E16, 2);
-ambient.layers.set(1);
-scene.add(ambient);*/
-
-import moon from './objects/moon';
-moon.position.x += -120;
-moon.position.y += 50;
-moon.position.z += -400;
-scene.add(moon);
-
-// light cast by the moon
-const moonLight = new THREE.SpotLight(0xfff396, 1, 500, Math.PI * 0.2, 0.25, 0.2);
-moonLight.castShadow = true;
-moonLight.position.copy(moon.position);
-moonLight.lookAt(0, 0, 0);
-moonLight.shadow.mapSize.width = 2048 * 2;
-moonLight.shadow.mapSize.height = 2048 * 2;
-scene.add(moonLight)
 
 scene.background = new THREE.Color(0x000E16);
 
