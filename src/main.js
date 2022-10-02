@@ -153,7 +153,7 @@ modelLoader.load('/scene.glb', (gltf) => {
 	resize();
 	loopAll(gltf.scene, (element) => {
 		if (element.material) {
-			element.material.flatShading = true;
+			element.material.flatShading = false;
 			if (element.name.includes("Hill")) {
 				element.receiveShadow = true;
 			} else if (element.name !== 'Moon') {
@@ -170,7 +170,7 @@ modelLoader.load('/scene.glb', (gltf) => {
 			}
 		}
 		if (element.isLight) {
-			element.power *= 0.015;
+			element.power *= 0.0015;
 		}
 
 		if (element.name === 'MoonLight') {
@@ -179,7 +179,14 @@ modelLoader.load('/scene.glb', (gltf) => {
 			element.shadow.mapSize.width = 2048 * 2;
 			element.shadow.mapSize.height = 2048 * 2;
 		}
+
+		if (element.name === 'SunLight' || element.name === 'Moon') {
+			element.layers.disable(0);
+			element.layers.enable(2);
+			console.log(element)
+		}
 	})
+	camera.layers.enable(2);
 	scene.add(gltf.scene);
 });
 
@@ -191,16 +198,15 @@ scene.fog = new THREE.Fog(0x000E16, 1, 400);
 ** Sky setup
 */
 
-scene.add(new THREE.AmbientLight(0x000E16, 1))
+scene.add(new THREE.AmbientLight(0x021621, 1))
 
 
-scene.background = new THREE.Color(0x000E16);
+scene.background = new THREE.Color(0x021621);
 
-const cloudGeometry = new THREE.PlaneGeometry(1300, 1000);
+const cloudGeometry = new THREE.PlaneGeometry(500, 500);
 import cloudMaterial from './objects/materials/clouds';
 const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
-cloud.position.y = 50;
-cloud.position.z = -620;
+cloud.position.y = 10;
+cloud.position.z = -250;
 cloud.rotation.x = Math.PI / 2;
-cloud.layers.set(1);
 scene.add(cloud);
