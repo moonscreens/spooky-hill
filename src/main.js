@@ -149,6 +149,7 @@ function loopAll(object, callback) {
 
 const modelLoader = new GLTFLoader();
 modelLoader.load('/scene.glb', (gltf) => {
+	scene.add(gltf.scene);
 	camera = gltf.cameras[0];
 	resize();
 	loopAll(gltf.scene, (element) => {
@@ -169,25 +170,14 @@ modelLoader.load('/scene.glb', (gltf) => {
 				}
 			}
 		}
-		if (element.isLight) {
-			element.power *= 0.0015;
-		}
 
 		if (element.name === 'MoonLight') {
 			element.castShadow = true;
-			element.lookAt(0, 0, 0);
-			element.shadow.mapSize.width = 2048 * 2;
-			element.shadow.mapSize.height = 2048 * 2;
-		}
-
-		if (element.name === 'SunLight' || element.name === 'Moon') {
-			element.layers.disable(0);
-			element.layers.enable(2);
-			console.log(element)
+			element.shadow.mapSize.width = 1024;
+			element.shadow.mapSize.height = 1024;
+			element.shadow.bias = -0.0004;
 		}
 	})
-	camera.layers.enable(2);
-	scene.add(gltf.scene);
 });
 
 const spawn = new THREE.Object3D();
