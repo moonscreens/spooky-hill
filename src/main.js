@@ -41,8 +41,9 @@ const ChatInstance = new TwitchChat({
 })
 
 let camera = new THREE.PerspectiveCamera(39.6, window.innerWidth / window.innerHeight, 0.1, 2000);
+//camera is replaced by GLTF loader
 camera.layers.enable(1);
-camera.position.z = 20;
+//camera.position.z = 20;
 
 if (query_vars.orbit) {
 	setInterval(() => {
@@ -151,6 +152,7 @@ const modelLoader = new GLTFLoader();
 modelLoader.load('/scene.glb', (gltf) => {
 	scene.add(gltf.scene);
 	camera = gltf.cameras[0];
+	camera.far = 250;
 	resize();
 	loopAll(gltf.scene, (element) => {
 		if (element.material) {
@@ -193,10 +195,9 @@ scene.add(new THREE.AmbientLight(0x021621, 1))
 
 scene.background = new THREE.Color(0x021621);
 
-const cloudGeometry = new THREE.PlaneGeometry(500, 500);
+const cloudGeometry = new THREE.CircleGeometry(250);
 import cloudMaterial from './objects/materials/clouds';
 const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
 cloud.position.y = 10;
-cloud.position.z = -250;
 cloud.rotation.x = Math.PI / 2;
 scene.add(cloud);
