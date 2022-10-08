@@ -179,6 +179,9 @@ modelLoader.load('/scene.glb', (gltf) => {
 			element.shadow.mapSize.height = 1024;
 			element.shadow.bias = -0.0004;
 		}
+		if (element.name === 'Moon') {
+			element.material.normalScale.setScalar(0.075);
+		}
 	})
 });
 
@@ -195,7 +198,7 @@ scene.add(new THREE.AmbientLight(0x021621, 1))
 
 scene.background = new THREE.Color(0x021621);
 
-const cloudGeometry = new THREE.CircleGeometry(250);
+const cloudGeometry = new THREE.CircleGeometry(400);
 import cloudMaterial from './objects/materials/clouds';
 const cloud = new THREE.Mesh(cloudGeometry, cloudMaterial);
 cloud.position.y = 10;
