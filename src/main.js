@@ -40,7 +40,7 @@ const ChatInstance = new TwitchChat({
 	maximumEmoteLimit: 3,
 })
 
-let camera = new THREE.PerspectiveCamera(39.6, window.innerWidth / window.innerHeight, 0.1, 2000);
+let camera = new THREE.PerspectiveCamera();
 //camera is replaced by GLTF loader
 camera.layers.enable(1);
 //camera.position.z = 20;
